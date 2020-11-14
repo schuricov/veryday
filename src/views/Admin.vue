@@ -1,173 +1,182 @@
 <template>
   <div>
-    <table class="admin">
 
-      <!--        {{testData}}-->
+    <AdminLog
+      v-show="logVisible"
+      @close="closeLog"
+      @submitEvent="checkInput"
+    />
 
-      <tr>
-        <td class="admin-menu">
+<!--    <table class="admin">-->
 
-          <div class="buttons-wrap">
+<!--      &lt;!&ndash;        {{testData}}&ndash;&gt;-->
 
-            <div class="button" v-on:click="imports">
-              <p>Імпорти</p>
-            </div>
+<!--      <tr>-->
+<!--        <td class="admin-menu">-->
 
-            <div class="button" v-on:click="systemConfig">
-              <p>Конфігурація</p>
-            </div>
+<!--          <div class="buttons-wrap">-->
 
-            <!--                    <div class="button" v-on:click="showLog">-->
-            <!--                        <p>Show log</p>-->
-            <!--                    </div>-->
+<!--            <div class="button" v-on:click="imports">-->
+<!--              <p>Імпорти</p>-->
+<!--            </div>-->
 
-            <!--                    <div class="button" v-on:click="closeLog">-->
-            <!--                        <p>Close log</p>-->
-            <!--                    </div>-->
+<!--            <div class="button" v-on:click="systemConfig">-->
+<!--              <p>Конфігурація</p>-->
+<!--            </div>-->
 
-            <div class="button" v-on:click="setContent">
-              <p style="color: #ee6a44">Зберегти</p>
-            </div>
-            <div class="button" v-on:click="showModal = true">
-              <p style="color: #ee6a44">Reset</p>
-            </div>
+<!--            &lt;!&ndash;                    <div class="button" v-on:click="showLog">&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <p>Show log</p>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    </div>&ndash;&gt;-->
 
-            <div class="button" v-on:click="logOut">
-              <p style="color: #42b983">Вихід</p>
-            </div>
+<!--            &lt;!&ndash;                    <div class="button" v-on:click="closeLog">&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <p>Close log</p>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    </div>&ndash;&gt;-->
 
-          </div>
+<!--            <div class="button" v-on:click="setContent">-->
+<!--              <p style="color: #ee6a44">Зберегти</p>-->
+<!--            </div>-->
+<!--            <div class="button" v-on:click="showModal = true">-->
+<!--              <p style="color: #ee6a44">Reset</p>-->
+<!--            </div>-->
 
-        </td>
+<!--            <div class="button" v-on:click="logOut">-->
+<!--              <p style="color: #42b983">Вихід</p>-->
+<!--            </div>-->
 
-        <td class="admin-content">
+<!--          </div>-->
 
-          <h2 class="menu-name">
-            {{ menuName }}
-          </h2>
+<!--        </td>-->
+
+<!--        <td class="admin-content">-->
+
+<!--          <h2 class="menu-name">-->
+<!--            {{ menuName }}-->
+<!--          </h2>-->
 
 
 
 
-          <div class="content-wrap">
+<!--          <div class="content-wrap">-->
 
-            <!--System config-->
+<!--            &lt;!&ndash;System config&ndash;&gt;-->
 
-            <div class="system-config" v-show="systemConfigVisible">
+<!--            <div class="system-config" v-show="systemConfigVisible">-->
 
-              <table>
-                <tr v-for="(value, key) in configTest" v-if="toggleConfigVisibility(key)">
-                  <td class="system-config-key">
-                    <p>{{ translateKeys(key) }}</p>
-                  </td>
-                  <td class="system-config-value">
-                    <div>
-                      <input class="input" v-model="configTest[key] = value">
-                    </div>
-                  </td>
+<!--              <table>-->
+<!--                <tr v-for="(value, key) in configTest" v-if="toggleConfigVisibility(key)">-->
+<!--                  <td class="system-config-key">-->
+<!--                    <p>{{ translateKeys(key) }}</p>-->
+<!--                  </td>-->
+<!--                  <td class="system-config-value">-->
+<!--                    <div>-->
+<!--                      <input class="input" v-model="configTest[key] = value">-->
+<!--                    </div>-->
+<!--                  </td>-->
 
-                </tr>
-              </table>
+<!--                </tr>-->
+<!--              </table>-->
 
-            </div>
+<!--            </div>-->
 
-            <!--imports-->
+<!--            &lt;!&ndash;imports&ndash;&gt;-->
 
-            <div class="system-status" v-show="importsVisible">
+<!--            <div class="system-status" v-show="importsVisible">-->
 
-              <table style="text-align: left;">
-                <tr>
-                  <td>
-                    <p>Імпортувати розклад сеансів</p>
-                  </td>
-                  <td>
-                    <button v-on:click="this.importsShowtimes">імпорт</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Імпортувати стан сидінь</p>
-                  </td>
-                  <td>
-                    <button v-on:click="this.importsSeats">імпорт</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Імпортувати холи</p>
-                  </td>
-                  <td>
-                    <button v-on:click="this.importsHalls">імпорт</button>
-                  </td>
-                </tr>
-              </table>
+<!--              <table style="text-align: left;">-->
+<!--                <tr>-->
+<!--                  <td>-->
+<!--                    <p>Імпортувати розклад сеансів</p>-->
+<!--                  </td>-->
+<!--                  <td>-->
+<!--                    <button v-on:click="this.importsShowtimes">імпорт</button>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <td>-->
+<!--                    <p>Імпортувати стан сидінь</p>-->
+<!--                  </td>-->
+<!--                  <td>-->
+<!--                    <button v-on:click="this.importsSeats">імпорт</button>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <td>-->
+<!--                    <p>Імпортувати холи</p>-->
+<!--                  </td>-->
+<!--                  <td>-->
+<!--                    <button v-on:click="this.importsHalls">імпорт</button>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--              </table>-->
 
-            </div>
+<!--            </div>-->
 
-          </div>
+<!--          </div>-->
 
-          <div class="content-log">
-            <!--                        {{logMessage}}-->
-          </div>
+<!--          <div class="content-log">-->
+<!--            &lt;!&ndash;                        {{logMessage}}&ndash;&gt;-->
+<!--          </div>-->
 
-        </td>
-      </tr>
+<!--        </td>-->
+<!--      </tr>-->
 
-      <transition name="fade">
-        <div class="save-alert" v-show="saveAlertVisibility">
-          <span>Збережено</span>
-        </div>
-      </transition>
-      <transition name="fade">
-        <div class="save-alert" v-show="resetAlertVisibility">
-          <span>Оновлено</span>
-        </div>
-      </transition>
+<!--      <transition name="fade">-->
+<!--        <div class="save-alert" v-show="saveAlertVisibility">-->
+<!--          <span>Збережено</span>-->
+<!--        </div>-->
+<!--      </transition>-->
+<!--      <transition name="fade">-->
+<!--        <div class="save-alert" v-show="resetAlertVisibility">-->
+<!--          <span>Оновлено</span>-->
+<!--        </div>-->
+<!--      </transition>-->
 
-      <AdminLog
-        v-show="logVisible"
-        @close="closeLog"
-        @submitEvent="checkInput"
-      />
+<!--      <AdminLog-->
+<!--        v-show="logVisible"-->
+<!--        @close="closeLog"-->
+<!--        @submitEvent="checkInput"-->
+<!--      />-->
 
-    </table>
-    <transition name="modal" v-if="showModal">
-      <div class="modal-mask">
-        <div class="modal-wrapper">
-          <div class="modal-container">
-            <div class="modal-header">
-              <h3>Перезавантажити розклад на всіх пристроях?</h3>
-            </div>
-            <div class="modal-footer">
+<!--    </table>-->
+<!--    <transition name="modal" v-if="showModal">-->
+<!--      <div class="modal-mask">-->
+<!--        <div class="modal-wrapper">-->
+<!--          <div class="modal-container">-->
+<!--            <div class="modal-header">-->
+<!--              <h3>Перезавантажити розклад на всіх пристроях?</h3>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
 
-              <button class="modal-default-button" @click="showModal = false">
-                Ні
-              </button>
-              <button class="modal-default-button" @click="reset">
-                Так
-              </button>
+<!--              <button class="modal-default-button" @click="showModal = false">-->
+<!--                Ні-->
+<!--              </button>-->
+<!--              <button class="modal-default-button" @click="reset">-->
+<!--                Так-->
+<!--              </button>-->
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-    <div class="lds-css" :class="{'show': showLoading}">
-      <div class="lds-spinner" style="width:100%;height:100%">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </transition>-->
+<!--    <div class="lds-css" :class="{'show': showLoading}">-->
+<!--      <div class="lds-spinner" style="width:100%;height:100%">-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--        <div></div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+
   </div>
 </template>
 
@@ -227,8 +236,8 @@ export default {
       console.log('URL_API_SHOWTIMES_GET: ' + process.env.URL_API_SHOWTIMES_GET + this.city)
       console.log('APP MODE: ' + process.env.NODE_ENV)
 
-      this.checkToken()
-      this.timerToken()
+      // this.checkToken()
+      // this.timerToken()
     },
     importsShowtimes () {
       this.importss(process.env.URL_API_SHOWTIMES + 'import')
@@ -281,8 +290,8 @@ export default {
           response => {
             console.log(response)
             if (response.accessToken && response.timeToken) {
-              this.$cookie.set('accessToken', response.accessToken, { expires: response.timeToken + 's' })
-              this.checkToken()
+              // this.$cookie.set('accessToken', response.accessToken, { expires: response.timeToken + 's' })
+              // this.checkToken()
             }
           },
           error => {
@@ -342,12 +351,12 @@ export default {
     },
     timerToken () {
       this.interval1 = setInterval(function () {
-        this.checkToken()
+        // this.checkToken()
       }.bind(this), 60000)
     },
     logOut () {
-      this.$cookie.delete('accessToken')
-      this.checkToken()
+      // this.$cookie.delete('accessToken')
+      // this.checkToken()
     },
     imports () {
       console.log('imports')
